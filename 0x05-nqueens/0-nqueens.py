@@ -3,29 +3,44 @@
 non-attacking queens on an N×N chessboard. Write a
 program that solves the N queens problem."""
 
-
-import sys
-
-
-def nqueens(n: int):
-    """
-    backtracking
-    """
-    matrix = [[0 for x in range(n)] for y in range(n)]
-    print(str(matrix))
+from sys import argv, exit
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 2 or len(sys.argv) < 2:
-        print("Usage: nqueens N")
+    if len(argv) != 2:
+        print('Usage: nqueens N')
+        exit(1)
+    try:
+        n = int(argv[1])
+    except BaseException:
+        print('N must be a number')
+        exit(1)
+    if n < 4:
+        print('N must be at least 4')
         exit(1)
 
-    if not sys.argv[1].isdigit():
-        print("N must be a number")
-        exit(1)
+    content = []
 
-    if int(sys.argv[1]) < 4:
-        print("N must be at least 4")
-        exit(1)
+    def solve_queens(val, n, content):
+        if (val == n):
+            print(content)
+        else:
+            for col in range(n):
+                res = [val, col]
+                if valid_res(content, res):
+                    content.append(res)
+                    solve_queens(val + 1, n, content)
+                    content.remove(res)
 
-    nqueens(int(sys.argv[1]))
+    def valid_res(content, res):
+        for que in content:
+            if que[1] == res[1]:
+                return False
+            if (que[0] + que[1]) == (res[0] + res[1]):
+                return False
+            if (que[0] - que[1]) == (res[0] - res[1]):
+                return False
+        return True
+
+
+solve_queens(0, n, content)
