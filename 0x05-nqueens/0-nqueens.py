@@ -22,6 +22,7 @@ if __name__ == "__main__":
     content = []
 
     def solve_queens(val, n, content):
+        """solve queens function"""
         if (val == n):
             print(content)
         else:
@@ -33,6 +34,7 @@ if __name__ == "__main__":
                     content.remove(res)
 
     def valid_res(content, res):
+        """valid_res function"""
         for que in content:
             if que[1] == res[1]:
                 return False
